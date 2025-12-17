@@ -1,37 +1,50 @@
-﻿#include <iostream>
-
+#include <iostream>
+#include <cmath>
 using namespace std;
 
 double func(double x) {
     // x^2 - sin(x) - 1 = 0
-    double result;
-    result = x * x - sin(x) - 1;
-    return result;
+    return x * x - sin(x) - 1;
 }
 
-void bisectionMethod() {
-    double a = 1, b = 2, c;
-    int iterations;
+double bisectionMethod(double a, double b, int maxIterations) {
+    if (func(a) * func(b) >= 0) {
+        cout << "Bisection method cannot be applied." << endl;
+        return NAN;
+    }
 
-    cout << "Enter the number of iterations: ";
-    cin >> iterations;
+    double c;
+    int iterations = 0;
 
-    while (iterations != 0) {
+    while (iterations < maxIterations) {
         c = (a + b) / 2;
-        if (func(a) * func(c) < 0) {
+        if (func(c) == 0.0) {
+            return c;
+        }
+        else if (func(c) * func(a) < 0) {
             b = c;
         }
         else {
             a = c;
         }
-        iterations--;
+        iterations++;
     }
-
-    cout << "The root is localized on the segment [" << a << " ; " << b << "]" << endl;
+    return (a + b) / 2;
 }
 
 int main() {
-    bisectionMethod();
+    double a = 1.0, b = 2.0;
+    int iterations;
+
+    cout << "Enter the number of iterations: ";
+    cin >> iterations;
+
+    double root = bisectionMethod(a, b, iterations);
+
+    if (!isnan(root)) {
+        cout << "Approximate root: " << root << endl;
+        cout << "Function value at root: " << func(root) << endl;
+    }
 
     return 0;
 }
