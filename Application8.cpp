@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cmath>
 using namespace std;
 
 double func(double x) {
@@ -48,3 +47,4 @@ int main() {
 
     return 0;
 }
+
